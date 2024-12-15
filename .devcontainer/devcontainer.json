@@ -1,0 +1,25 @@
+{
+    "name": "Docker from Docker Compose",
+    "dockerComposeFile": "docker-compose.yml",
+    "service": "devcontainer",
+    // "workspaceFolder": "${HOME}/controls_sandbox",
+    "workspaceFolder": "/home/eric/controls_sandbox",
+    // Use this environment variable if you need to bind mount your local source code into a new container.
+    "remoteEnv": {
+        "LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+    },
+    "remoteUser": "eric",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-vscode.cmake-tools",
+                "ms-vscode.cpptools",
+                "ms-vscode.cpptools-extension-pack"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash",
+                "terminal.integrated.shell.linux": "bash"
+            }
+        }
+    }
+}

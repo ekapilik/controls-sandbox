@@ -1,0 +1,38 @@
+version: '3'
+
+services:
+  devcontainer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # https://github.com/microsoft/vscode-remote-release/issues/7958
+      args:
+        BUILDKIT_INLINE_CACHE: 0
+        USERNAME: eric
+        USER_UID: 1002
+        TZ: "Canada/Pacific"
+        LANG: "en_US.UTF-8"
+
+    volumes:
+      # Update this to wherever you want VS Code to mount the folder of your project, make sure you update workspaceFolder in devcontainer.json as well
+      - ../:${HOME}/controls_sandbox:cached
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority:rw
+
+      - /home/eric/development/eric/dot-files:${HOME}/dot-files
+
+    entrypoint: /usr/bin/bash
+    command: -c "echo Container started && trap 'exit 0' 15 && exec \"$$@\" && while sleep 1 & wait $$!; do :; done"
+
+    tty: true
+    stdin_open: true
+
+    security_opt:
+      - seccomp:unconfined
+
+    network_mode: "host"
+    ipc: "host"
+    shm_size: 1G
+
+    environment:
+      - DISPLAY
