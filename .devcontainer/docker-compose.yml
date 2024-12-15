@@ -18,6 +18,7 @@ services:
       - ../:${HOME}/controls_sandbox:cached
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthority:rw
+      - ${HOME}/.ssh:${HOME}/.ssh
 
       - /home/eric/development/eric/dot-files:${HOME}/dot-files
     
