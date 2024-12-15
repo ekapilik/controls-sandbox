@@ -25,6 +25,19 @@ RUN apt-get install -qqy --no-install-recommends locales && \
 
 RUN apt-get install -y \
     bash \
-    git
+    git \
+    wget \
+    mesa-utils
 
+# Mujoco
+ENV MUJOCO_VERSION=3.2.6
+ENV ARCH=x86_64
+ENV MUJOCO_TAR=mujoco-${MUJOCO_VERSION}-linux-${ARCH}.tar.gz
+RUN wget https://github.com/google-deepmind/mujoco/releases/download/${MUJOCO_VERSION}/${MUJOCO_TAR} -O /home/$USERNAME/${MUJOCO_TAR}
+RUN tar -xzvf /home/$USERNAME/mujoco-${MUJOCO_VERSION}-linux-${ARCH}.tar.gz -C /home/$USERNAME
+RUN rm /home/$USERNAME/mujoco-${MUJOCO_VERSION}-linux-${ARCH}.tar.gz
+
+
+# User
 USER $USERNAME
+RUN export XDG_RUNTIME_DIR=/run/user/$(id -u)

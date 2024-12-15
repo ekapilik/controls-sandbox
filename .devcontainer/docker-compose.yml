@@ -45,3 +45,4 @@ services:
 
     environment:
       - DISPLAY
+      - LIBGL_ALWAYS_SOFTWARE=1
