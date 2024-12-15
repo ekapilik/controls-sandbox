@@ -20,6 +20,14 @@ services:
       - $HOME/.Xauthority:/root/.Xauthority:rw
 
       - /home/eric/development/eric/dot-files:${HOME}/dot-files
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
 
     entrypoint: /usr/bin/bash
     command: -c "echo Container started && trap 'exit 0' 15 && exec \"$$@\" && while sleep 1 & wait $$!; do :; done"
